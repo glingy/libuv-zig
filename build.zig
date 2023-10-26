@@ -5,11 +5,13 @@ pub fn build(b: *std.Build) !void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
 
+    const single_threaded = if (b.user_input_options.get("single_threaded") != null) std.mem.eql(u8, b.user_input_options.get("single_threaded").?.value.scalar, "single_threaded") else null;
+
     const lib = b.addStaticLibrary(.{
         .name = "uv",
         .target = target,
         .optimize = optimize,
-        .single_threaded = b.user_input_options.get("single_threaded"),
+        .single_threaded = single_threaded,
     });
 
     // Include dirs
