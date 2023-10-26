@@ -5,7 +5,7 @@ pub fn build(b: *std.Build) !void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
 
-    const single_threaded = if (b.user_input_options.get("single_threaded") != null) std.mem.eql(u8, b.user_input_options.get("single_threaded").?.value.scalar, "single_threaded") else null;
+    const single_threaded = b.option(bool, "single_threaded", "Build single threaded") orelse false;
 
     const lib = b.addStaticLibrary(.{
         .name = "uv",
