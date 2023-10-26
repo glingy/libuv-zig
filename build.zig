@@ -9,6 +9,7 @@ pub fn build(b: *std.Build) !void {
         .name = "uv",
         .target = target,
         .optimize = optimize,
+        .single_threaded = b.user_input_options.get("single_threaded"),
     });
 
     // Include dirs
