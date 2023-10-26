@@ -12,8 +12,8 @@ pub fn build(b: *std.Build) !void {
     });
 
     // Include dirs
-    lib.addIncludePath("include");
-    lib.addIncludePath("src");
+    lib.addIncludePath(.{ .path = "include" });
+    lib.addIncludePath(.{ .path = "src" });
 
     // Links
     if (target.isWindows()) {
@@ -132,4 +132,25 @@ pub fn build(b: *std.Build) !void {
             "src/unix/fsevents.c",
         }, flags.items);
     }
+
+    inline for (&.{
+        "uv.h",
+        "uv/aix.h",
+        "uv/bsd.h",
+        "uv/darwin.h",
+        "uv/errno.h",
+        "uv/linux.h",
+        "uv/os390.h",
+        "uv/posix.h",
+        "uv/sunos.h",
+        "uv/threadpool.h",
+        "uv/tree.h",
+        "uv/unix.h",
+        "uv/version.h",
+        "uv/win.h",
+    }) |path| {
+        lib.installHeader("include/" ++ path, path);
+    }
+
+    b.installArtifact(lib);
 }
