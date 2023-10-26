@@ -72,7 +72,35 @@ pub fn build(b: *std.Build) !void {
         "src/version.c",
     }, flags.items);
 
-    if (!target.isWindows()) {
+    if (target.isWindows()) {
+        lib.addCSourceFiles(&.{
+            "src/win/async.c",
+            "src/win/error.c",
+            "src/win/getnameinfo.c",
+            "src/win/poll.c",
+            "src/win/snprintf.c",
+            "src/win/tty.c",
+            "src/win/winsock.c",
+            "src/win/core.c",
+            "src/win/fs-event.c",
+            "src/win/handle.c",
+            "src/win/process-stdio.c",
+            "src/win/stream.c",
+            "src/win/udp.c",
+            "src/win/detect-wakeup.c",
+            "src/win/fs.c",
+            "src/win/loop-watcher.c",
+            "src/win/process.c",
+            "src/win/tcp.c",
+            "src/win/util.c",
+            "src/win/dl.c",
+            "src/win/getaddrinfo.c",
+            "src/win/pipe.c",
+            "src/win/signal.c",
+            "src/win/thread.c",
+            "src/win/winapi.c",
+        }, flags.items);
+    } else {
         lib.addCSourceFiles(&.{
             "src/unix/async.c",
             "src/unix/core.c",
